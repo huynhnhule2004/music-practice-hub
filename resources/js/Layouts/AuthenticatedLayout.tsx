@@ -76,7 +76,7 @@ export default function AuthenticatedLayout({ children, wide = false }: PropsWit
 
                         <Link
                             href={route('practice.session')}
-                            className="hidden h-10 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 lg:inline-flex"
+                            className="btn-brand hidden h-10 items-center gap-1.5 rounded-lg px-4 text-sm font-semibold lg:inline-flex"
                         >
                             <Play className="h-4 w-4 fill-current" />
                             {t('nav_practise')}
@@ -153,7 +153,7 @@ export default function AuthenticatedLayout({ children, wide = false }: PropsWit
                             href={route('practice.session')}
                             aria-label={t('nav_practise')}
                             aria-current={practising ? 'page' : undefined}
-                            className="-mt-5 flex h-16 w-16 flex-col items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 ring-4 ring-background transition-transform active:scale-95"
+                            className="btn-brand -mt-5 flex h-16 w-16 flex-col items-center justify-center rounded-full shadow-lg shadow-primary/40 ring-4 ring-background transition-transform active:scale-95"
                         >
                             <Play className="h-6 w-6 translate-x-px fill-current" />
                             <span className="mt-0.5 text-[10px] font-bold">{t('nav_practise')}</span>

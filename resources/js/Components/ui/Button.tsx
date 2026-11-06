@@ -8,11 +8,11 @@ const base =
     'inline-flex shrink-0 items-center justify-center gap-2 rounded-lg font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50 select-none';
 
 const variants: Record<Variant, string> = {
-    primary: 'bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/80',
+    primary: 'btn-brand',
     secondary: 'border border-input bg-card text-foreground hover:bg-muted active:bg-border',
     ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground',
     danger: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-    amber: 'bg-brass text-[hsl(229_38%_15%)] hover:bg-brass/90',
+    amber: 'bg-brass text-[hsl(340_32%_13%)] hover:bg-brass/90',
 };
 
 // Every size is at least 40px tall; md and up meet the 44px touch target.

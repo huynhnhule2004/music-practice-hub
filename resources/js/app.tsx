@@ -31,6 +31,6 @@ createInertiaApp({
         );
     },
     progress: {
-        color: 'hsl(230 72% 50%)',
+        color: 'hsl(346 74% 43%)',
     },
 });

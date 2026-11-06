@@ -1,10 +1,10 @@
 import { Head, Link } from '@inertiajs/react';
-import { Flame, Play, Plus } from 'lucide-react';
+import { CalendarCheck, Clock, Flame, Music2, Play, Plus } from 'lucide-react';
 import GoalCard from '@/Components/GoalCard';
 import PieceCard from '@/Components/PieceCard';
 import PracticeStaff from '@/Components/PracticeStaff';
 import StaffScroller from '@/Components/StaffScroller';
-import { buttonClass, LinkButton } from '@/Components/ui/Button';
+import { LinkButton } from '@/Components/ui/Button';
 import EmptyState from '@/Components/ui/EmptyState';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { formatMinutes, intlLocale, useTrans } from '@/lib/i18n';
@@ -44,32 +44,39 @@ export default function Dashboard({ auth, dailyGoal, days, todayMinutes, totals,
         <AuthenticatedLayout wide>
             <Head title={t('nav_today')} />
 
-            {/* Today: greeting, the ring, one big action */}
-            <section className="grid items-center gap-6 sm:grid-cols-[1fr_auto]">
-                <div>
-                    <h1 className="text-[1.75rem] font-bold leading-tight tracking-tight sm:text-4xl">{t(greeting, { name: firstName })}</h1>
-                    <p className="mt-1.5 text-muted-foreground">{nudge}</p>
-                    <div className="mt-5 flex flex-wrap items-center gap-3">
-                        <Link href={route('practice.session')} className={buttonClass('primary', 'lg', 'shadow-md shadow-primary/20')}>
-                            <Play className="h-5 w-5 fill-current" />
-                            {todayMinutes > 0 ? t('keep_going') : t('start_practising')}
-                        </Link>
-                        <Link href={route('practice.create')} className={buttonClass('ghost', 'lg')}>
-                            {t('log_session')}
-                        </Link>
+            {/* Today: the one bold, colourful block on the page */}
+            <section className="bg-brand hero-glow relative overflow-hidden rounded-3xl p-6 sm:p-8">
+                <HeroNotes />
+                <div className="relative grid items-center gap-7 sm:grid-cols-[1fr_auto]">
+                    <div>
+                        <h1 className="text-[1.75rem] font-bold leading-tight tracking-tight sm:text-4xl">{t(greeting, { name: firstName })}</h1>
+                        <p className="mt-1.5 text-white/85">{nudge}</p>
+                        <div className="mt-6 flex flex-wrap items-center gap-3">
+                            <Link
+                                href={route('practice.session')}
+                                className="inline-flex h-12 items-center gap-2 rounded-xl bg-brass px-6 text-base font-bold text-[hsl(340_40%_12%)] shadow-lg shadow-black/25 transition-transform hover:-translate-y-0.5 active:translate-y-0"
+                            >
+                                <Play className="h-5 w-5 fill-current" />
+                                {todayMinutes > 0 ? t('keep_going') : t('start_practising')}
+                            </Link>
+                            <Link
+                                href={route('practice.create')}
+                                className="inline-flex h-12 items-center rounded-xl px-4 text-base font-semibold text-white/90 ring-1 ring-white/30 transition-colors hover:bg-white/10"
+                            >
+                                {t('log_session')}
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex items-center gap-6 sm:gap-8">
-                    <GoalRing minutes={todayMinutes} goal={dailyGoal} />
-                    <div className="space-y-4">
-                        <div>
-                            <p className="text-sm font-medium text-muted-foreground">{t('current_streak')}</p>
-                            <p className="tabular mt-0.5 inline-flex items-center gap-1 text-3xl font-bold text-coral">
-                                <Flame className="h-7 w-7" aria-hidden="true" />
+                    <div className="flex items-center gap-6 sm:gap-8">
+                        <GoalRing minutes={todayMinutes} goal={dailyGoal} />
+                        <div className="rounded-2xl bg-white/12 px-4 py-3 ring-1 ring-white/20 backdrop-blur-sm">
+                            <p className="text-sm font-medium text-white/80">{t('current_streak')}</p>
+                            <p className="tabular mt-0.5 inline-flex items-center gap-1 text-3xl font-bold">
+                                <Flame className="h-7 w-7 fill-[hsl(36_100%_60%)] text-[hsl(20_100%_62%)]" aria-hidden="true" />
                                 {streak.current}
                             </p>
-                            <p className="text-xs text-muted-foreground">{t('best_streak', { days: streak.best })}</p>
+                            <p className="text-xs text-white/75">{t('best_streak', { days: streak.best })}</p>
                         </div>
                     </div>
                 </div>
@@ -119,10 +126,15 @@ export default function Dashboard({ auth, dailyGoal, days, todayMinutes, totals,
                 </div>
                 <p className="mt-2.5 text-sm text-muted-foreground">{t('staff_caption')}</p>
 
-                <dl className="mt-6 grid grid-cols-3 gap-4 border-y border-border py-5">
-                    <Figure label={t('total_sessions')} value={totals.sessions} />
-                    <Figure label={t('hours_practiced')} value={(totals.minutes / 60).toLocaleString(intlLocale(locale), { maximumFractionDigits: 1 })} />
-                    <Figure label={t('songs_learned')} value={totals.pieces} />
+                <dl className="mt-6 grid grid-cols-3 gap-3">
+                    <Figure tone="primary" icon={<CalendarCheck className="h-4 w-4" />} label={t('total_sessions')} value={totals.sessions} />
+                    <Figure
+                        tone="brass"
+                        icon={<Clock className="h-4 w-4" />}
+                        label={t('hours_practiced')}
+                        value={(totals.minutes / 60).toLocaleString(intlLocale(locale), { maximumFractionDigits: 1 })}
+                    />
+                    <Figure tone="teal" icon={<Music2 className="h-4 w-4" />} label={t('songs_learned')} value={totals.pieces} />
                 </dl>
             </section>
 
@@ -167,7 +179,7 @@ export default function Dashboard({ auth, dailyGoal, days, todayMinutes, totals,
     );
 }
 
-/** Today's minutes as a ring that fills toward the daily goal. */
+/** Today's minutes as a ring that fills toward the daily goal; gold until met, then mint. */
 function GoalRing({ minutes, goal }: { minutes: number; goal: number }) {
     const { t } = useTrans();
     const r = 52;
@@ -178,32 +190,68 @@ function GoalRing({ minutes, goal }: { minutes: number; goal: number }) {
     return (
         <div className="relative h-32 w-32 shrink-0" role="img" aria-label={`${minutes} / ${goal} ${t('minutes_short')}`}>
             <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90">
-                <circle cx="60" cy="60" r={r} fill="none" strokeWidth="10" className="stroke-muted" />
+                <circle cx="60" cy="60" r={r} fill="none" strokeWidth="11" stroke="rgb(255 255 255 / 0.18)" />
                 <circle
                     cx="60"
                     cy="60"
                     r={r}
                     fill="none"
-                    strokeWidth="10"
+                    strokeWidth="11"
                     strokeLinecap="round"
                     strokeDasharray={c}
                     strokeDashoffset={c * (1 - pct)}
-                    className={`transition-[stroke-dashoffset] duration-700 ${met ? 'stroke-primary' : 'stroke-brass'}`}
+                    stroke={met ? 'hsl(160 84% 60%)' : 'hsl(42 100% 62%)'}
+                    className="transition-[stroke-dashoffset] duration-700"
                 />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="tabular text-3xl font-bold leading-none tracking-tight">{minutes}</span>
-                <span className="mt-1 text-xs font-medium text-muted-foreground">{t('of_goal', { goal })}</span>
+                <span className="mt-1 text-xs font-medium text-white/80">{t('of_goal', { goal })}</span>
             </div>
         </div>
     );
 }
 
-function Figure({ label, value }: { label: string; value: number | string }) {
+/** Faint staff lines and notes drifting across the hero, purely decorative. */
+function HeroNotes() {
     return (
-        <div>
-            <dt className="text-sm font-medium text-muted-foreground">{label}</dt>
-            <dd className="tabular mt-0.5 text-2xl font-bold tracking-tight sm:text-3xl">{value}</dd>
+        <svg className="pointer-events-none absolute -right-10 top-1/2 h-[140%] w-[70%] -translate-y-1/2 opacity-[0.14]" viewBox="0 0 400 200" aria-hidden="true">
+            {[0, 1, 2, 3, 4].map((i) => (
+                <line key={i} x1="0" x2="400" y1={60 + i * 18} y2={60 + i * 18} stroke="white" strokeWidth="2" />
+            ))}
+            {[
+                [70, 114],
+                [130, 96],
+                [190, 78],
+                [250, 105],
+                [310, 69],
+                [370, 87],
+            ].map(([x, y]) => (
+                <g key={x} fill="white">
+                    <ellipse cx={x} cy={y} rx="11" ry="8" transform={`rotate(-22 ${x} ${y})`} />
+                    <rect x={x + 9} y={y - 58} width="3" height="58" />
+                </g>
+            ))}
+        </svg>
+    );
+}
+
+const figureTones = {
+    primary: { bg: 'bg-primary/10', text: 'text-primary' },
+    brass: { bg: 'bg-brass/15', text: 'text-brass-ink' },
+    teal: { bg: 'bg-teal/10', text: 'text-teal' },
+} as const;
+
+function Figure({ label, value, icon, tone }: { label: string; value: number | string; icon: React.ReactNode; tone: keyof typeof figureTones }) {
+    const c = figureTones[tone];
+
+    return (
+        <div className={`rounded-2xl p-3 sm:p-4 ${c.bg}`}>
+            <dt className={`flex items-center gap-1.5 text-xs font-semibold sm:text-sm ${c.text}`}>
+                <span className="hidden shrink-0 sm:inline">{icon}</span>
+                <span className="leading-tight">{label}</span>
+            </dt>
+            <dd className="tabular mt-1 text-2xl font-bold tracking-tight sm:text-3xl">{value}</dd>
         </div>
     );
 }

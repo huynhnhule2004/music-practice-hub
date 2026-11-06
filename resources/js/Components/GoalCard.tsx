@@ -17,7 +17,11 @@ export default function GoalCard({ goal, entryId, compact = false }: { goal: Goa
             : t('days_left', { count: goal.days_left });
 
     const body = (
-        <div className={`rounded-xl border bg-card p-4 ${goal.is_completed ? 'border-border' : 'border-brass/40'}`}>
+        <div
+            className={`rounded-2xl border p-4 ${
+                goal.is_completed ? 'border-border bg-card' : 'border-brass/40 bg-gradient-to-br from-brass/15 via-card to-card'
+            }`}
+        >
             <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                     {!compact && goal.song && <p className="truncate text-sm text-muted-foreground">{goal.song.title}</p>}

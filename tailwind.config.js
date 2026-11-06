@@ -23,6 +23,7 @@ export default {
                 foreground: 'hsl(var(--foreground))',
                 staff: 'hsl(var(--staff))',
                 coral: 'hsl(var(--coral))',
+                teal: 'hsl(var(--teal))',
                 panel: 'hsl(var(--panel))',
                 brass: {
                     DEFAULT: 'hsl(var(--brass))',

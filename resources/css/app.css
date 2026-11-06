@@ -3,63 +3,66 @@
 @tailwind utilities;
 
 /*
- * Palette: cobalt (primary), amber (goal / today), coral (streak) on cool paper.
- * Values are HSL triplets so Tailwind can apply opacity modifiers.
+ * Palette: "concert hall". Velvet-curtain crimson (primary), stage-light gold (brass:
+ * goals / today), peacock (teal: contrast), flame orange (coral: streaks), on ivory
+ * manuscript paper with plum ink. Values are HSL triplets so Tailwind can apply opacity.
  */
 @layer base {
     :root {
-        --background: 225 45% 97%;      /* paper        #F4F6FC */
-        --foreground: 229 38% 15%;      /* navy ink     #18203A */
+        --background: 38 38% 97%;       /* ivory paper  #FAF8F4 */
+        --foreground: 340 32% 13%;      /* plum ink     #2B1620 */
         --card: 0 0% 100%;
-        --card-foreground: 229 38% 15%;
+        --card-foreground: 340 32% 13%;
         --popover: 0 0% 100%;
-        --popover-foreground: 229 38% 15%;
-        --primary: 230 72% 50%;         /* cobalt       #2343DB */
+        --popover-foreground: 340 32% 13%;
+        --primary: 346 74% 43%;         /* crimson      #BF1D4B */
         --primary-foreground: 0 0% 100%;
-        --secondary: 228 50% 93%;
-        --secondary-foreground: 229 38% 15%;
-        --muted: 228 45% 93%;
-        --muted-foreground: 228 16% 40%;
-        --accent: 228 50% 93%;
-        --accent-foreground: 229 38% 15%;
-        --destructive: 0 70% 48%;
+        --secondary: 32 32% 93%;
+        --secondary-foreground: 340 32% 13%;
+        --muted: 32 30% 93%;
+        --muted-foreground: 340 10% 40%;
+        --accent: 32 32% 93%;
+        --accent-foreground: 340 32% 13%;
+        --destructive: 0 72% 46%;
         --destructive-foreground: 0 0% 100%;
-        --border: 228 35% 88%;
-        --input: 228 28% 80%;
-        --ring: 230 72% 50%;
-        --staff: 228 25% 74%;
-        --brass: 40 88% 52%;            /* amber        #EFA61F */
-        --brass-ink: 36 85% 32%;        /* amber text with AA contrast on paper */
-        --coral: 6 82% 58%;             /* coral        #EC5443 */
-        --panel: 230 68% 44%;           /* staff panel  #2440BC */
+        --border: 30 24% 87%;
+        --input: 30 16% 78%;
+        --ring: 346 74% 43%;
+        --staff: 25 14% 72%;
+        --brass: 41 90% 50%;            /* stage gold   #F2A60D */
+        --brass-ink: 36 85% 30%;        /* gold text with AA contrast on paper */
+        --coral: 16 88% 52%;            /* flame        #F0571A */
+        --teal: 188 70% 30%;            /* peacock      #177F8B */
+        --panel: 342 48% 17%;           /* curtain dark #401629 */
         --radius: 0.5rem;
     }
 
     .dark {
-        --background: 231 38% 9%;       /* #0E1220 */
-        --foreground: 226 40% 93%;
-        --card: 231 32% 13%;
-        --card-foreground: 226 40% 93%;
-        --popover: 231 32% 13%;
-        --popover-foreground: 226 40% 93%;
-        --primary: 229 90% 68%;         /* light cobalt #6E8BFA */
-        --primary-foreground: 231 45% 10%;
-        --secondary: 230 26% 19%;
-        --secondary-foreground: 226 40% 93%;
-        --muted: 230 26% 19%;
-        --muted-foreground: 226 20% 68%;
-        --accent: 230 26% 19%;
-        --accent-foreground: 226 40% 93%;
+        --background: 340 22% 8%;       /* wine black   #180F13 */
+        --foreground: 35 35% 93%;
+        --card: 340 18% 12%;
+        --card-foreground: 35 35% 93%;
+        --popover: 340 18% 12%;
+        --popover-foreground: 35 35% 93%;
+        --primary: 348 86% 66%;         /* light crimson #F5617F */
+        --primary-foreground: 340 40% 10%;
+        --secondary: 340 14% 18%;
+        --secondary-foreground: 35 35% 93%;
+        --muted: 340 14% 18%;
+        --muted-foreground: 30 12% 68%;
+        --accent: 340 14% 18%;
+        --accent-foreground: 35 35% 93%;
         --destructive: 0 75% 60%;
         --destructive-foreground: 0 0% 100%;
-        --border: 230 24% 21%;
-        --input: 230 20% 30%;
-        --ring: 229 90% 68%;
-        --staff: 229 20% 36%;
-        --brass: 42 92% 60%;
+        --border: 340 13% 21%;
+        --input: 340 11% 30%;
+        --ring: 348 86% 66%;
+        --staff: 30 10% 38%;
+        --brass: 42 92% 58%;
         --brass-ink: 42 92% 64%;
-        --coral: 6 90% 66%;
-        --panel: 230 58% 26%;
+        --coral: 18 92% 62%;
+        --teal: 186 58% 50%;
+        --panel: 342 42% 14%;
     }
 }
 
@@ -79,6 +82,9 @@
     body {
         @apply bg-background font-sans text-foreground antialiased;
         font-optical-sizing: auto;
+        /* A faint pool of stage light at the top of every page. */
+        background-image: radial-gradient(56rem 24rem at 50% -10rem, hsl(var(--brass) / 0.1), transparent 70%);
+        background-repeat: no-repeat;
     }
 
     :focus-visible {
@@ -88,16 +94,52 @@
 
 @layer components {
     /*
-     * The cobalt panel the practice staff sits on. It re-points the colour tokens,
-     * so anything inside (staff lines, notes, labels) turns light automatically.
+     * The dark curtain panel the practice staff sits on, lit by a gold spot. It re-points
+     * the colour tokens, so anything inside (staff lines, notes, labels) turns light.
      */
     .staff-panel {
-        --foreground: 0 0% 100%;
-        --muted-foreground: 228 85% 88%;
-        --staff: 228 75% 74%;
+        --foreground: 38 60% 96%;
+        --muted-foreground: 30 35% 78%;
+        --staff: 30 25% 52%;
         --brass-ink: 42 95% 64%;
         background-color: hsl(var(--panel));
+        background-image: radial-gradient(40rem 16rem at 50% -6rem, hsl(42 100% 65% / 0.16), transparent 70%);
         color: hsl(var(--foreground));
+    }
+
+    /*
+     * The stage: crimson velvet with soft vertical folds and a gold spotlight from
+     * the top right. Used for the Today hero and the raised Practise tab.
+     */
+    .bg-brand {
+        background-color: hsl(346 70% 34%);
+        background-image:
+            radial-gradient(34rem 18rem at 88% -20%, hsl(42 100% 68% / 0.42), transparent 62%),
+            linear-gradient(180deg, transparent 40%, hsl(342 60% 14% / 0.45)),
+            repeating-linear-gradient(90deg, hsl(342 60% 12% / 0.32) 0, hsl(0 0% 100% / 0.07) 1.6rem, hsl(342 60% 12% / 0.32) 3.2rem);
+        color: #fff;
+    }
+
+    /* Primary buttons: solid crimson with a lit top edge. */
+    .btn-brand {
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+        box-shadow:
+            inset 0 1px 0 hsl(0 0% 100% / 0.2),
+            0 6px 16px -8px hsl(var(--primary) / 0.75);
+        transition: background-color 150ms, box-shadow 150ms, transform 150ms;
+    }
+
+    .btn-brand:hover {
+        background-color: hsl(var(--primary) / 0.9);
+    }
+
+    .btn-brand:active {
+        transform: translateY(1px);
+    }
+
+    .hero-glow {
+        box-shadow: 0 24px 56px -28px hsl(346 70% 30% / 0.7);
     }
 }
 

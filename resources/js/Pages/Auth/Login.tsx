@@ -110,7 +110,7 @@ export default function Login({
                     )}
                 </div>
 
-                <PrimaryButton className="mt-6 h-11 w-full" disabled={processing}>
+                <PrimaryButton className="mt-6 h-11 w-full rounded-lg text-base" disabled={processing}>
                     {t('auth_ui.log_in')}
                 </PrimaryButton>
 
