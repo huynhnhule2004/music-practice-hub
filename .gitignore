@@ -1,0 +1,50 @@
+# --- Dependencies & build output ---
+/node_modules
+/vendor
+/public/build
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+
+# --- Environment & secrets ---
+.env
+.env.*
+!.env.example
+/auth.json
+/storage/*.key
+
+# --- Local data, logs & backups ---
+*.log
+/storage/pail
+/storage/backups
+*.sqlite
+*.sqlite-journal
+
+# --- Tests ---
+.phpunit.result.cache
+/.phpunit.cache
+
+# --- Editors / OS ---
+/.idea
+/.vscode
+/.zed
+/.nova
+.phpactor.json
+_ide_helper.php
+.DS_Store
+Thumbs.db
+Homestead.json
+Homestead.yaml
+
+# --- AI tooling ---
+# Personal Claude Code settings (may contain API tokens) and browser screenshots.
+/.claude/settings.local.json
+/.claude/*.local.*
+/.playwright-mcp
+# Copies of the Laravel Boost skills for other agents; regenerate with `php artisan boost:install`.
+# Shared for the team: .claude/skills, CLAUDE.md, AGENTS.md, .ai/guidelines, .mcp.json, boost.json.
+/.codex
+/.cursor/
+/.junie/
+/.kiro/
+/.github/skills/
